@@ -1,0 +1,11 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:$COMMIT_SHA', 'api']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:$COMMIT_SHA']
+images:
+- '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
