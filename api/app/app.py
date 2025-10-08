@@ -5,4 +5,4 @@ from fastapi import Depends, FastAPI
 app = FastAPI()
 @app.get("/")
 async def home():
-    return {"message": f"Hello RKE2! demo"}
+    return {"message": f"Hello RKE2! dari branch demo"}
