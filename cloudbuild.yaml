@@ -1,0 +1,17 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:$COMMIT_SHA', 'api']
+# Tag the container image with latest
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:$COMMIT_SHA', '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:latest']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:$COMMIT_SHA']
+# Push latest tag to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:latest']
+images:
+- '${_REGISTRY}/$PROJECT_ID/${_REPOSITORY}/${_REPOSITORY_DETAIL}:latest'
+options:
+  logging: CLOUD_LOGGING_ONLY
